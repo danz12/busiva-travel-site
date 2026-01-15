@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Filter } from 'lucide-react';
 import TourCard from './TourCard';
 import { supabase } from '@/lib/supabase';
+import { tours as fallbackTours } from '../data/siteData';
 
 interface ToursProps {
   onInquire: (tour: any) => void;
@@ -24,9 +25,26 @@ interface Tour {
 }
 
 const Tours: React.FC<ToursProps> = ({ onInquire }) => {
+  const mapFallbackTour = (tour: typeof fallbackTours[number]): Tour => ({
+    id: String(tour.id),
+    name: tour.name,
+    location: tour.location,
+    category: tour.category,
+    duration: tour.duration,
+    group_size: tour.groupSize,
+    difficulty: tour.difficulty,
+    price: tour.price,
+    description: tour.description,
+    image: tour.image,
+    highlights: tour.highlights,
+    is_active: true,
+    sort_order: tour.id,
+  });
+
   const [tours, setTours] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const defaultCategory = 'Historical';
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
@@ -46,9 +64,22 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
         .order('sort_order', { ascending: true });
 
       if (error) {
-        setLoadError(error.message);
+        const fallback = fallbackTours.map(mapFallbackTour);
+        if (fallback.length) {
+          setTours(fallback);
+          setUsingFallback(true);
+          setLoadError(null);
+        } else {
+          setLoadError(error.message);
+        }
       } else {
-        setTours((data as Tour[]) || []);
+        const nextTours = (data as Tour[]) || [];
+        if (nextTours.length > 0) {
+          setTours(nextTours);
+        } else {
+          setTours(fallbackTours.map(mapFallbackTour));
+          setUsingFallback(true);
+        }
       }
 
       setLoading(false);
@@ -223,6 +254,7 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-600">
             Showing <span className="font-semibold text-gray-900">{filteredTours.length}</span> tours
+            {usingFallback && <span className="text-gray-400"> (featured list)</span>}
           </p>
         </div>
 
