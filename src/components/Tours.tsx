@@ -24,27 +24,32 @@ interface Tour {
   sort_order: number | null;
 }
 
-const Tours: React.FC<ToursProps> = ({ onInquire }) => {
-  const mapFallbackTour = (tour: typeof fallbackTours[number]): Tour => ({
-    id: String(tour.id),
-    name: tour.name,
-    location: tour.location,
-    category: tour.category,
-    duration: tour.duration,
-    group_size: tour.groupSize,
-    difficulty: tour.difficulty,
-    price: tour.price,
-    description: tour.description,
-    image: tour.image,
-    highlights: tour.highlights,
-    is_active: true,
-    sort_order: tour.id,
-  });
+const mapFallbackTour = (tour: typeof fallbackTours[number]): Tour => ({
+  id: String(tour.id),
+  name: tour.name,
+  location: tour.location,
+  category: tour.category,
+  duration: tour.duration,
+  group_size: tour.groupSize,
+  difficulty: tour.difficulty,
+  price: tour.price,
+  description: tour.description,
+  image: tour.image,
+  highlights: tour.highlights,
+  is_active: true,
+  sort_order: tour.id,
+});
 
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [loading, setLoading] = useState(true);
+const Tours: React.FC<ToursProps> = ({ onInquire }) => {
+  const initialFallbackTours = useMemo(
+    () => fallbackTours.map(mapFallbackTour),
+    [mapFallbackTour]
+  );
+
+  const [tours, setTours] = useState<Tour[]>(initialFallbackTours);
+  const [loading, setLoading] = useState(initialFallbackTours.length === 0);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [usingFallback, setUsingFallback] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(initialFallbackTours.length > 0);
   const [searchQuery, setSearchQuery] = useState('');
   const defaultCategory = 'Historical';
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
@@ -54,7 +59,9 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
 
   useEffect(() => {
     const fetchTours = async () => {
-      setLoading(true);
+      if (initialFallbackTours.length === 0) {
+        setLoading(true);
+      }
       setLoadError(null);
 
       const { data, error } = await supabase
@@ -64,9 +71,8 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
         .order('sort_order', { ascending: true });
 
       if (error) {
-        const fallback = fallbackTours.map(mapFallbackTour);
-        if (fallback.length) {
-          setTours(fallback);
+        if (initialFallbackTours.length) {
+          setTours(initialFallbackTours);
           setUsingFallback(true);
           setLoadError(null);
         } else {
@@ -76,9 +82,14 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
         const nextTours = (data as Tour[]) || [];
         if (nextTours.length > 0) {
           setTours(nextTours);
+          setUsingFallback(false);
         } else {
-          setTours(fallbackTours.map(mapFallbackTour));
-          setUsingFallback(true);
+          if (initialFallbackTours.length) {
+            setTours(initialFallbackTours);
+            setUsingFallback(true);
+          } else {
+            setTours([]);
+          }
         }
       }
 
