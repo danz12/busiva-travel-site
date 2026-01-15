@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const [popularTours, setPopularTours] = useState<{ id: string; name: string }[]>([]);
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -88,7 +89,7 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-emerald-100 shadow-sm">
-                <img src="/logo.png" alt="Busiva Tour & Travel logo" className="w-10 h-10 object-contain" />
+                <img src={logoUrl} alt="Busiva Tour & Travel logo" className="w-10 h-10 object-contain" />
               </div>
               <div>
                 <h3 className="text-xl font-bold">Busiva</h3>

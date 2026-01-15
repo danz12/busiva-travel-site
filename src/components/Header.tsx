@@ -5,6 +5,7 @@ import { companyInfo, navLinks } from '../data/siteData';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +43,7 @@ const Header: React.FC = () => {
               className="flex items-center gap-3"
             >
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-emerald-100 shadow-sm">
-                <img src="/logo.png" alt="Busiva Tour & Travel logo" className="w-10 h-10 object-contain" />
+                <img src={logoUrl} alt="Busiva Tour & Travel logo" className="w-10 h-10 object-contain" />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Busiva</h1>
