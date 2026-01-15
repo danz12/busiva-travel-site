@@ -123,8 +123,9 @@ const InquiryModal: React.FC<InquiryModalProps> = ({ isOpen, onClose, selectedTo
         onClose();
         setFormData({ name: '', email: '', phone: '', message: '' });
       }, 3000);
-    } catch (err: any) {
-      setError(err.message || 'Failed to send inquiry. Please try again.');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to send inquiry. Please try again.';
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }

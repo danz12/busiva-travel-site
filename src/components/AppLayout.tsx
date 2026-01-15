@@ -7,6 +7,7 @@ import Tours from './Tours';
 import Ticketing from './Ticketing';
 import Corporate from './Corporate';
 import Testimonials from './Testimonials';
+import Faq from './Faq';
 import Contact from './Contact';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
@@ -77,6 +78,9 @@ const AppLayout: React.FC = () => {
 
         {/* Testimonials Section */}
         <Testimonials />
+
+        {/* FAQ Section */}
+        <Faq />
 
         {/* Contact Section */}
         <Contact />

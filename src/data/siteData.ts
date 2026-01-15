@@ -266,6 +266,39 @@ export const trustBadges = [
   { label: "10+", value: "Years Experience", icon: "award" },
 ];
 
+export const faqs = [
+  {
+    id: "faq-1",
+    question: "Can I customize my itinerary?",
+    answer: "Yes. We tailor every trip around your interests, pace, and travel dates, from cultural tours to adventure treks.",
+  },
+  {
+    id: "faq-2",
+    question: "What is included in your tour prices?",
+    answer: "Packages typically include accommodation, transport, guides, and major activities. We share a detailed inclusion list with every quote.",
+  },
+  {
+    id: "faq-3",
+    question: "Do you arrange domestic and international flights?",
+    answer: "Yes. Our ticketing team handles domestic and international flights and can bundle them into your itinerary.",
+  },
+  {
+    id: "faq-4",
+    question: "How far in advance should I book?",
+    answer: "We recommend 4-6 weeks for standard tours and 8-12 weeks for peak seasons or larger groups.",
+  },
+  {
+    id: "faq-5",
+    question: "Is it safe to travel in Ethiopia?",
+    answer: "We monitor conditions daily, work with vetted local partners, and provide on-trip support for peace of mind.",
+  },
+  {
+    id: "faq-6",
+    question: "Do you offer corporate or group discounts?",
+    answer: "Yes. We provide flexible rates and tailored logistics for corporate travel, NGOs, and private groups.",
+  },
+];
+
 export const navLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
@@ -273,5 +306,6 @@ export const navLinks = [
   { name: "Ticketing", href: "#ticketing" },
   { name: "Corporate", href: "#corporate" },
   { name: "Reviews", href: "#reviews" },
+  { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ];

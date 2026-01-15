@@ -146,8 +146,9 @@ const Admin: React.FC = () => {
 
       if (error) throw error;
       setPackages((data as TourPackage[]) || []);
-    } catch (error: any) {
-      setPackageError(error.message || 'Failed to load packages.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to load packages.';
+      setPackageError(message);
     } finally {
       setPackagesLoading(false);
     }
@@ -243,8 +244,9 @@ const Admin: React.FC = () => {
 
       resetPackageForm();
       fetchPackages();
-    } catch (error: any) {
-      setPackageError(error.message || 'Failed to save package.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to save package.';
+      setPackageError(message);
     } finally {
       setPackageSaving(false);
     }
@@ -260,8 +262,9 @@ const Admin: React.FC = () => {
         .eq('id', pkg.id);
       if (error) throw error;
       fetchPackages();
-    } catch (error: any) {
-      setPackageError(error.message || 'Failed to update package.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to update package.';
+      setPackageError(message);
     } finally {
       setPackageSaving(false);
     }
@@ -270,7 +273,7 @@ const Admin: React.FC = () => {
   const updateInquiryStatus = async (id: string, status: string) => {
     setUpdating(true);
     try {
-      const updateData: any = {
+      const updateData: Partial<Inquiry> & { status: Inquiry['status']; updated_at: string } = {
         status,
         updated_at: new Date().toISOString()
       };

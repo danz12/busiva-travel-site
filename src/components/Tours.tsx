@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { tours as fallbackTours } from '../data/siteData';
 
 interface ToursProps {
-  onInquire: (tour: any) => void;
+  onInquire: (tour: Tour | null) => void;
 }
 
 interface Tour {
@@ -24,27 +24,26 @@ interface Tour {
   sort_order: number | null;
 }
 
-const mapFallbackTour = (tour: typeof fallbackTours[number]): Tour => ({
-  id: String(tour.id),
-  name: tour.name,
-  location: tour.location,
-  category: tour.category,
-  duration: tour.duration,
-  group_size: tour.groupSize,
-  difficulty: tour.difficulty,
-  price: tour.price,
-  description: tour.description,
-  image: tour.image,
-  highlights: tour.highlights,
-  is_active: true,
-  sort_order: tour.id,
-});
-
 const Tours: React.FC<ToursProps> = ({ onInquire }) => {
-  const initialFallbackTours = useMemo(
-    () => fallbackTours.map(mapFallbackTour),
-    [mapFallbackTour]
-  );
+  const initialFallbackTours = useMemo(() => {
+    const mapFallbackTour = (tour: typeof fallbackTours[number]): Tour => ({
+      id: String(tour.id),
+      name: tour.name,
+      location: tour.location,
+      category: tour.category,
+      duration: tour.duration,
+      group_size: tour.groupSize,
+      difficulty: tour.difficulty,
+      price: tour.price,
+      description: tour.description,
+      image: tour.image,
+      highlights: tour.highlights,
+      is_active: true,
+      sort_order: tour.id,
+    });
+
+    return fallbackTours.map(mapFallbackTour);
+  }, []);
 
   const [tours, setTours] = useState<Tour[]>(initialFallbackTours);
   const [loading, setLoading] = useState(initialFallbackTours.length === 0);
@@ -97,7 +96,7 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
     };
 
     fetchTours();
-  }, []);
+  }, [initialFallbackTours]);
 
   const categories = useMemo(() => {
     const unique = new Set(tours.map((tour) => tour.category).filter(Boolean));
@@ -111,13 +110,13 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
 
   const normalizeCategory = (value: string) => value.trim().toLowerCase();
 
-  const resolveDefaultCategory = () => {
+  const resolveDefaultCategory = React.useCallback(() => {
     const normalizedDefault = normalizeCategory(defaultCategory);
     const match = categories.find(
       (category) => normalizeCategory(category) === normalizedDefault
     );
     return match || 'All';
-  };
+  }, [categories, defaultCategory]);
 
   useEffect(() => {
     if (hasSetDefaultCategory || categories.length <= 1) {
@@ -126,7 +125,7 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
 
     setSelectedCategory(resolveDefaultCategory());
     setHasSetDefaultCategory(true);
-  }, [categories, defaultCategory, hasSetDefaultCategory]);
+  }, [categories, hasSetDefaultCategory, resolveDefaultCategory]);
 
   const hasSelectedCategoryMatches = useMemo(() => {
     if (selectedCategory === 'All') {
@@ -203,7 +202,7 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
     }
 
     return result;
-  }, [searchQuery, selectedCategory, selectedDifficulty, sortBy]);
+  }, [searchQuery, selectedCategory, selectedDifficulty, sortBy, tours]);
 
   return (
     <section id="tours" className="py-20 bg-white">

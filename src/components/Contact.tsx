@@ -76,8 +76,9 @@ const Contact: React.FC = () => {
           message: ''
         });
       }, 5000);
-    } catch (err: any) {
-      setError(err.message || 'Failed to send message. Please try again.');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }
