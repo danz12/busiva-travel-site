@@ -28,9 +28,11 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const defaultCategory = 'Historical';
+  const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
+  const [hasSetDefaultCategory, setHasSetDefaultCategory] = useState(false);
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -64,6 +66,18 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
     const unique = new Set(tours.map((tour) => tour.difficulty).filter(Boolean));
     return ['All', ...Array.from(unique)];
   }, [tours]);
+
+  const resolveDefaultCategory = () =>
+    categories.includes(defaultCategory) ? defaultCategory : 'All';
+
+  useEffect(() => {
+    if (hasSetDefaultCategory || categories.length <= 1) {
+      return;
+    }
+
+    setSelectedCategory(resolveDefaultCategory());
+    setHasSetDefaultCategory(true);
+  }, [categories, defaultCategory, hasSetDefaultCategory]);
 
   const filteredTours = useMemo(() => {
     let result = [...tours];
@@ -235,7 +249,7 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
             <button
               onClick={() => {
                 setSearchQuery('');
-                setSelectedCategory('All');
+                setSelectedCategory(resolveDefaultCategory());
                 setSelectedDifficulty('All');
               }}
               className="px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
