@@ -17,7 +17,7 @@ const NotFound = () => {
         <h1 className="text-5xl font-bold mb-6 text-primary">404</h1>
         <p className="text-xl text-card-foreground mb-6">Page not found</p>
         <a
-          href={`${import.meta.env.BASE_URL}#/`}
+          href={import.meta.env.BASE_URL}
           className="text-primary hover:text-primary/80 underline transition-colors"
         >
           Return to Home
