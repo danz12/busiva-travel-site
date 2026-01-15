@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle, Award, Users, Globe, Heart } from 'lucide-react';
-import { companyInfo, heroImages } from '../data/siteData';
+import { companyInfo, tours } from '../data/siteData';
 
 const About: React.FC = () => {
   const features = [
@@ -32,6 +32,9 @@ const About: React.FC = () => {
     { value: "50+", label: "Tour Packages" },
     { value: "24/7", label: "Support" }
   ];
+
+  const primaryImage = tours[0]?.image;
+  const secondaryImage = tours[1]?.image;
 
   return (
     <section id="about" className="py-20 bg-gray-50">
@@ -87,16 +90,24 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Content - Feature Cards */}
+          {/* Right Content - Image Stack + Features */}
           <div className="grid sm:grid-cols-2 gap-6">
-            <div className="sm:col-span-2">
+            <div className="sm:col-span-2 grid sm:grid-cols-2 gap-4">
               <div className="relative overflow-hidden rounded-2xl border border-emerald-100 shadow-lg">
                 <img
-                  src={heroImages.main}
-                  alt="Ethiopian landscape"
-                  className="w-full h-64 object-cover"
+                  src={primaryImage}
+                  alt="Ethiopian heritage experience"
+                  className="w-full h-56 object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-transparent" />
+              </div>
+              <div className="relative overflow-hidden rounded-2xl border border-emerald-100 shadow-lg sm:mt-6">
+                <img
+                  src={secondaryImage}
+                  alt="Ethiopian nature adventure"
+                  className="w-full h-56 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/0 to-transparent" />
               </div>
             </div>
             {features.map((feature, index) => (
