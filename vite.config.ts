@@ -4,12 +4,13 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: mode === "production" ? "/busiva-travel-site/" : "/",
   server: {
     host: "::",
     port: 8080,
   },
   plugins: [
-    react()
+    react(),
   ].filter(Boolean),
   resolve: {
     alias: {
