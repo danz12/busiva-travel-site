@@ -117,6 +117,25 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
     setHasSetDefaultCategory(true);
   }, [categories, defaultCategory, hasSetDefaultCategory]);
 
+  const hasSelectedCategoryMatches = useMemo(() => {
+    if (selectedCategory === 'All') {
+      return true;
+    }
+
+    const normalizedSelected = normalizeCategory(selectedCategory);
+    return tours.some(
+      tour => normalizeCategory(tour.category || '') === normalizedSelected
+    );
+  }, [tours, selectedCategory]);
+
+  useEffect(() => {
+    if (loading || selectedCategory === 'All' || hasSelectedCategoryMatches) {
+      return;
+    }
+
+    setSelectedCategory('All');
+  }, [loading, selectedCategory, hasSelectedCategoryMatches]);
+
   const filteredTours = useMemo(() => {
     let result = [...tours];
 
