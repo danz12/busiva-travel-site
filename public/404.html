@@ -8,16 +8,23 @@
       (function () {
         var l = window.location;
         var pathSegmentsToKeep = 1;
-        var redirectPath = l.pathname.split("/").slice(0, 1 + pathSegmentsToKeep).join("/");
-        var search = l.search ? l.search.replace(/&/g, "~and~") : "";
+        var basePath = l.pathname
+          .split("/")
+          .slice(0, 1 + pathSegmentsToKeep)
+          .join("/");
+        var restPath = l.pathname
+          .split("/")
+          .slice(1 + pathSegmentsToKeep)
+          .join("/");
+        var search = l.search ? l.search.slice(1).replace(/&/g, "~and~") : "";
         var newUrl =
           l.protocol +
           "//" +
           l.host +
-          redirectPath +
+          basePath +
           "/?/" +
-          l.pathname.slice(1) +
-          search +
+          restPath +
+          (search ? "&" + search : "") +
           l.hash;
         window.location.replace(newUrl);
       })();
