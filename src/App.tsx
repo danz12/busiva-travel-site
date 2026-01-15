@@ -20,7 +20,7 @@ const App = () => (
         <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/+$/, "")}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/*" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
