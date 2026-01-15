@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle, Award, Users, Globe, Heart } from 'lucide-react';
-import { companyInfo } from '../data/siteData';
+import { companyInfo, heroImages } from '../data/siteData';
 
 const About: React.FC = () => {
   const features = [
@@ -54,19 +54,11 @@ const About: React.FC = () => {
           {/* Left Content */}
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Crafting Unforgettable Ethiopian Journeys Since 2014
+              Crafting Ethiopian Journeys Since 2014
             </h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              {companyInfo.name} was founded with a simple mission: to share the extraordinary 
-              beauty and rich heritage of Ethiopia with the world. Based in the heart of 
-              Addis Ababa, our team combines local expertise with international service standards 
-              to deliver exceptional travel experiences.
-            </p>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              Whether you're seeking ancient history at Lalibela's rock churches, adventure in 
-              the Simien Mountains, or cultural immersion in the Omo Valley, we design journeys 
-              that go beyond typical tourism to create meaningful connections with Ethiopia's 
-              people, places, and traditions.
+              {companyInfo.name} is based in Addis Ababa and designs tailored trips that blend 
+              local expertise with international service standards for authentic, seamless travel.
             </p>
 
             {/* Checklist */}
@@ -97,6 +89,16 @@ const About: React.FC = () => {
 
           {/* Right Content - Feature Cards */}
           <div className="grid sm:grid-cols-2 gap-6">
+            <div className="sm:col-span-2">
+              <div className="relative overflow-hidden rounded-2xl border border-emerald-100 shadow-lg">
+                <img
+                  src={heroImages.main}
+                  alt="Ethiopian landscape"
+                  className="w-full h-64 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-transparent" />
+              </div>
+            </div>
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -116,9 +118,8 @@ const About: React.FC = () => {
         <div className="mt-16 bg-gradient-to-r from-emerald-700 to-emerald-800 rounded-3xl p-8 md:p-12 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Our Promise to You</h3>
           <p className="text-emerald-100 text-lg max-w-3xl mx-auto leading-relaxed">
-            "We don't just plan trips - we create transformative experiences that connect you 
-            with the soul of Ethiopia. Every journey with Busiva is designed to exceed expectations, 
-            respect local communities, and leave you with memories that last a lifetime."
+            "We create immersive journeys that respect local communities and leave you with 
+            lasting memories of Ethiopia."
           </p>
           <p className="text-amber-400 font-semibold mt-4">- The Busiva Team</p>
         </div>
