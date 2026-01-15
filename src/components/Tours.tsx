@@ -67,8 +67,15 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
     return ['All', ...Array.from(unique)];
   }, [tours]);
 
-  const resolveDefaultCategory = () =>
-    categories.includes(defaultCategory) ? defaultCategory : 'All';
+  const normalizeCategory = (value: string) => value.trim().toLowerCase();
+
+  const resolveDefaultCategory = () => {
+    const normalizedDefault = normalizeCategory(defaultCategory);
+    const match = categories.find(
+      (category) => normalizeCategory(category) === normalizedDefault
+    );
+    return match || 'All';
+  };
 
   useEffect(() => {
     if (hasSetDefaultCategory || categories.length <= 1) {
@@ -95,7 +102,10 @@ const Tours: React.FC<ToursProps> = ({ onInquire }) => {
 
     // Category filter
     if (selectedCategory !== 'All') {
-      result = result.filter(tour => tour.category === selectedCategory);
+      const normalizedSelected = normalizeCategory(selectedCategory);
+      result = result.filter(
+        tour => normalizeCategory(tour.category || '') === normalizedSelected
+      );
     }
 
     // Difficulty filter
