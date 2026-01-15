@@ -409,7 +409,7 @@ const Admin: React.FC = () => {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50 flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-8 h-8 text-gray-400 animate-spin mx-auto mb-3" />
           <p className="text-gray-600">Loading admin portal...</p>
@@ -420,12 +420,12 @@ const Admin: React.FC = () => {
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50 flex items-center justify-center px-4">
+        <div className="w-full max-w-md bg-white/90 backdrop-blur rounded-3xl shadow-xl border border-emerald-100/60 p-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Login</h1>
           <p className="text-gray-600 mb-6">Sign in to manage inquiries and packages.</p>
           {authError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
               {authError}
             </div>
           )}
@@ -437,7 +437,7 @@ const Admin: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none bg-white"
                 placeholder="admin@businessplusvacation.com"
               />
             </div>
@@ -448,13 +448,13 @@ const Admin: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none bg-white"
                 placeholder="••••••••"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition-colors"
+              className="w-full py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-colors shadow-lg shadow-emerald-500/20"
             >
               Sign In
             </button>
@@ -465,9 +465,9 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-white/85 backdrop-blur-md border-b border-emerald-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -475,26 +475,29 @@ const Admin: React.FC = () => {
                 <ArrowLeft className="w-5 h-5" />
                 <span className="hidden sm:inline">Back to Site</span>
               </a>
-              <div className="h-6 w-px bg-gray-300" />
-              <h1 className="text-xl font-bold text-gray-900">Inquiry Management</h1>
+              <div className="h-6 w-px bg-emerald-200/80" />
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">Inquiry Management</h1>
+                <p className="text-xs text-emerald-700 font-medium">Busiva Admin Console</p>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setActiveTab('inquiries')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   activeTab === 'inquiries'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/20'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
               >
                 Inquiries
               </button>
               <button
                 onClick={() => setActiveTab('packages')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   activeTab === 'packages'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/20'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
               >
                 Packages
@@ -502,14 +505,14 @@ const Admin: React.FC = () => {
               <button
                 onClick={exportToCSV}
                 disabled={activeTab !== 'inquiries'}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Export</span>
               </button>
               <button
                 onClick={() => (activeTab === 'inquiries' ? fetchInquiries() : fetchPackages())}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-full hover:from-emerald-700 hover:to-emerald-800 transition-colors shadow-lg shadow-emerald-500/20"
               >
                 <RefreshCw className={`w-4 h-4 ${activeTab === 'inquiries' ? (loading ? 'animate-spin' : '') : (packagesLoading ? 'animate-spin' : '')}`} />
                 <span className="hidden sm:inline">Refresh</span>
@@ -530,7 +533,7 @@ const Admin: React.FC = () => {
           <>
             {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div className="bg-white/90 backdrop-blur rounded-2xl p-4 shadow-sm border border-emerald-100/60">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-gray-600" />
@@ -541,7 +544,7 @@ const Admin: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div className="bg-white/90 backdrop-blur rounded-2xl p-4 shadow-sm border border-emerald-100/60">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                 <AlertCircle className="w-5 h-5 text-blue-600" />
@@ -552,7 +555,7 @@ const Admin: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div className="bg-white/90 backdrop-blur rounded-2xl p-4 shadow-sm border border-emerald-100/60">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
                 <Clock className="w-5 h-5 text-amber-600" />
@@ -563,7 +566,7 @@ const Admin: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div className="bg-white/90 backdrop-blur rounded-2xl p-4 shadow-sm border border-emerald-100/60">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
                 <CheckCircle className="w-5 h-5 text-emerald-600" />
@@ -577,7 +580,7 @@ const Admin: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-6">
+        <div className="bg-white/90 backdrop-blur rounded-2xl p-4 shadow-sm border border-emerald-100/60 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -614,7 +617,7 @@ const Admin: React.FC = () => {
         </div>
 
         {/* Inquiries Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white/90 backdrop-blur rounded-2xl shadow-sm border border-emerald-100/60 overflow-hidden">
           {loading ? (
             <div className="p-12 text-center">
               <RefreshCw className="w-8 h-8 text-gray-400 animate-spin mx-auto mb-4" />
@@ -628,7 +631,7 @@ const Admin: React.FC = () => {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-100">
+                <thead className="bg-emerald-50/60 border-b border-emerald-100">
                   <tr>
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Date</th>
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Contact</th>
@@ -640,7 +643,7 @@ const Admin: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {filteredInquiries.map((inquiry) => (
-                    <tr key={inquiry.id} className="hover:bg-gray-50">
+                    <tr key={inquiry.id} className="hover:bg-emerald-50/40">
                       <td className="px-4 py-3">
                         <p className="text-sm text-gray-900">{formatDate(inquiry.created_at)}</p>
                       </td>
@@ -694,7 +697,7 @@ const Admin: React.FC = () => {
 
         {activeTab === 'packages' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-sm border border-emerald-100/60">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">Tour Packages</h2>
@@ -854,7 +857,7 @@ const Admin: React.FC = () => {
               </form>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white/90 backdrop-blur rounded-2xl shadow-sm border border-emerald-100/60 overflow-hidden">
               {packagesLoading ? (
                 <div className="p-12 text-center">
                   <RefreshCw className="w-8 h-8 text-gray-400 animate-spin mx-auto mb-4" />
@@ -868,7 +871,7 @@ const Admin: React.FC = () => {
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b border-gray-100">
+                    <thead className="bg-emerald-50/60 border-b border-emerald-100">
                       <tr>
                         <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Name</th>
                         <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Category</th>
@@ -879,7 +882,7 @@ const Admin: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {packages.map((pkg) => (
-                        <tr key={pkg.id} className="hover:bg-gray-50">
+                        <tr key={pkg.id} className="hover:bg-emerald-50/40">
                           <td className="px-4 py-3">
                             <p className="text-sm font-medium text-gray-900">{pkg.name}</p>
                             <p className="text-xs text-gray-500">{pkg.location}</p>
@@ -923,9 +926,9 @@ const Admin: React.FC = () => {
       {/* Detail Modal */}
       {activeTab === 'inquiries' && selectedInquiry && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setSelectedInquiry(null)} />
-          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedInquiry(null)} />
+          <div className="relative bg-white rounded-3xl shadow-2xl border border-emerald-100/60 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-emerald-100 px-6 py-4 flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Inquiry Details</h2>
                 <p className="text-sm text-gray-500">ID: {selectedInquiry.id.slice(0, 8).toUpperCase()}</p>
