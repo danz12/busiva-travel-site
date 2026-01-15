@@ -22,9 +22,9 @@
           "//" +
           l.host +
           basePath +
-          "/?/" +
+          "/#/" +
           restPath +
-          (search ? "&" + search : "") +
+          (search ? "?" + search : "") +
           l.hash;
         window.location.replace(newUrl);
       })();
