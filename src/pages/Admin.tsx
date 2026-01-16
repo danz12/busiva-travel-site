@@ -4,7 +4,7 @@ import {
   Clock, AlertCircle, X, Calendar, Mail, Phone,
   Plane, Compass, Briefcase, ArrowLeft, Download
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { supabase, supabaseAnonKey, supabaseUrl } from '@/lib/supabase';
 import type { Session } from '@supabase/supabase-js';
 
 interface Inquiry {
@@ -317,19 +317,22 @@ const Admin: React.FC = () => {
     if (!confirmClear) return;
     setClearingInquiries(true);
     try {
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError) throw sessionError;
-      const accessToken = sessionData?.session?.access_token;
+      const accessToken = session?.access_token;
       if (!accessToken) {
         throw new Error('Missing session token for clearing inquiries.');
       }
-      const { error } = await supabase.functions.invoke('clear-inquiries', {
+      const response = await fetch(`${supabaseUrl}/functions/v1/clear-inquiries`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
+          apikey: supabaseAnonKey,
+          'Content-Type': 'application/json'
         }
       });
-      if (error) throw error;
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        throw new Error(errorBody?.error || 'Failed to clear inquiries.');
+      }
       setInquiries([]);
       setSelectedInquiry(null);
       setAdminNotes('');
