@@ -11,7 +11,7 @@ export const companyInfo = {
   hours: "Open 24 Hours",
   rating: 5.0,
   reviewCount: 127,
-  yearsExperience: 10,
+  yearsExperience: 15,
   happyTravelers: 500,
 };
 
@@ -263,7 +263,7 @@ export const trustBadges = [
   { label: "5.0 Rating", value: "Google Reviews", icon: "star" },
   { label: "24/7", value: "Support Available", icon: "clock" },
   { label: "500+", value: "Happy Travelers", icon: "users" },
-  { label: "10+", value: "Years Experience", icon: "award" },
+  { label: "15+", value: "Years Experience", icon: "award" },
 ];
 
 export const faqs = [

@@ -27,7 +27,7 @@ const About: React.FC = () => {
   ];
 
   const stats = [
-    { value: "10+", label: "Years Experience" },
+    { value: "15+", label: "Years Experience" },
     { value: "500+", label: "Happy Travelers" },
     { value: "50+", label: "Tour Packages" },
     { value: "24/7", label: "Support" }
