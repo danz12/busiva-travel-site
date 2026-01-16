@@ -317,8 +317,17 @@ const Admin: React.FC = () => {
     if (!confirmClear) return;
     setClearingInquiries(true);
     try {
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError) throw sessionError;
+      const accessToken = sessionData?.session?.access_token;
+      if (!accessToken) {
+        throw new Error('Missing session token for clearing inquiries.');
+      }
       const { error } = await supabase.functions.invoke('clear-inquiries', {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
       });
       if (error) throw error;
       setInquiries([]);
