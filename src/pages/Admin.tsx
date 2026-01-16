@@ -70,6 +70,7 @@ const Admin: React.FC = () => {
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [adminNotes, setAdminNotes] = useState('');
   const [updating, setUpdating] = useState(false);
+  const [clearingInquiries, setClearingInquiries] = useState(false);
 
   const [packages, setPackages] = useState<TourPackage[]>([]);
   const [packagesLoading, setPackagesLoading] = useState(false);
@@ -311,6 +312,26 @@ const Admin: React.FC = () => {
     }
   };
 
+  const clearAllInquiries = async () => {
+    const confirmClear = window.confirm('This will permanently delete all inquiries. Continue?');
+    if (!confirmClear) return;
+    setClearingInquiries(true);
+    try {
+      const { error } = await supabase
+        .from('inquiries')
+        .delete()
+        .neq('id', '');
+      if (error) throw error;
+      setInquiries([]);
+      setSelectedInquiry(null);
+      setAdminNotes('');
+    } catch (error) {
+      console.error('Error clearing inquiries:', error);
+    } finally {
+      setClearingInquiries(false);
+    }
+  };
+
   const filteredInquiries = inquiries.filter(inquiry => {
     const matchesSearch = 
       inquiry.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -512,6 +533,14 @@ const Admin: React.FC = () => {
               >
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Export</span>
+              </button>
+              <button
+                onClick={clearAllInquiries}
+                disabled={activeTab !== 'inquiries' || clearingInquiries}
+                className="flex items-center gap-2 px-4 py-2 text-red-700 bg-white border border-red-200 rounded-full hover:bg-red-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <X className={`w-4 h-4 ${clearingInquiries ? 'animate-pulse' : ''}`} />
+                <span className="hidden sm:inline">Clear All</span>
               </button>
               <button
                 onClick={() => (activeTab === 'inquiries' ? fetchInquiries() : fetchPackages())}
