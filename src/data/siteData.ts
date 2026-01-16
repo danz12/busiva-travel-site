@@ -261,7 +261,7 @@ export const services = [
 
 export const trustBadges = [
   { label: "5.0 Rating", value: "Google Reviews", icon: "star" },
-  { label: "24/7", value: "Support Available", icon: "clock" },
+  { label: "Dedicated", value: "Trip Experts", icon: "clock" },
   { label: "500+", value: "Happy Travelers", icon: "users" },
   { label: "15+", value: "Years Experience", icon: "award" },
 ];
