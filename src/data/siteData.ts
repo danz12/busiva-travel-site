@@ -16,7 +16,8 @@ export const companyInfo = {
 };
 
 export const heroImages = {
-  main: "https://d64gsuwffb70l.cloudfront.net/696681f7d60783bbb13a9cd7_1768325745248_79ae3771.jpg",
+  // Lake Tana (Bahir Dar) hero image
+  main: "https://d64gsuwffb70l.cloudfront.net/696681f7d60783bbb13a9cd7_1768325980286_ba1edd70.jpg",
 };
 
 export const tours = [

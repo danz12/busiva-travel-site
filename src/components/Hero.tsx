@@ -20,10 +20,10 @@ const Hero: React.FC<HeroProps> = ({ onOpenInquiry }) => {
       <div className="absolute inset-0">
         <img
           src={heroImages.main}
-          alt="Ethiopian Highlands"
+          alt="Lake Tana, Ethiopia"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 via-gray-900/45 to-gray-900/20" />
       </div>
 
       {/* Content */}
